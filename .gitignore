@@ -1,0 +1,5 @@
+build/
+vendor/*
+composer.lock
+php-cs-fixer.phar
+src/Skwi/Bundle/ProjectBaseBundle/Resources/doc/phpdoc-cache-*

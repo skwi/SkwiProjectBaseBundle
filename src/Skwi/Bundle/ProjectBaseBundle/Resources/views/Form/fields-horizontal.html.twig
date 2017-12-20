@@ -1,0 +1,54 @@
+{% extends 'SkwiProjectBaseBundle:Form:fields.html.twig' %}
+
+{% block form_widget_simple %}
+{% spaceless %}
+    <div class="col-md-10">
+        {{ parent() }}
+    </div>
+{% endspaceless %}
+{% endblock form_widget_simple %}
+
+{# WIDGET - IMAGE #}
+{% block image_widget %}
+{% spaceless %}
+    <div class="col-md-10">
+        {% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control'}) %}
+        {% set type = type|default('text') %}
+        <input type="{{ type }}" {{ block('widget_attributes') }}  {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        {% if preview and image_url is not null %}
+            <img src="{{ asset(image_url) }}"/>
+        {% endif %}
+    </div>
+{% endspaceless %}
+{% endblock %}
+
+{% block form_label %}
+{% spaceless %}
+    {% set label_attr = label_attr|merge({'class': 'col-md-2'}) %}
+    {{ parent() }}
+{% endspaceless %}
+{% endblock form_label %}
+
+{% block textarea_widget %}
+{% spaceless %}
+    <div class="col-md-10">
+        {{ parent() }}
+    </div>
+{% endspaceless %}
+{% endblock textarea_widget %}
+
+{% block checkbox_widget %}
+{% spaceless %}
+    <div class="col-md-10">
+        {{ parent() }}
+    </div>
+{% endspaceless %}
+{% endblock checkbox_widget %}
+
+{% block choice_widget %}
+{% spaceless %}
+    <div class="col-md-10">
+        {{ parent() }}
+    </div>
+{% endspaceless %}
+{% endblock choice_widget %}
