@@ -66,6 +66,11 @@ abstract class BaseManager
      */
     protected function getManagedType()
     {
+        $matches = [];
+        if (preg_match('#DoctrineORM(Entity|Document)Manager_\w{64}#', get_class($this->om), $matches)) {
+            return $matches[1];
+        }
+        
         $type = substr(get_class($this->om), strrpos(get_class($this->om), '\\') + 1);
         $type = str_replace('Manager', '', $type);
 
