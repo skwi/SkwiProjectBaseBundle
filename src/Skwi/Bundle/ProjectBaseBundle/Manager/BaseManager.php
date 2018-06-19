@@ -186,7 +186,7 @@ abstract class BaseManager
             }
         }
 
-        $matchTest = sprintf('#^%s:([a-z]+)$#i', $this->bundleName);
+        $matchTest = sprintf('#^%s:([a-z\\\]+)$#i', $this->bundleName);
         if (preg_match($matchTest, $objectName, $match)) {
             if ($objectProperty) {
                 $this->$objectProperty = $match[1];
@@ -491,8 +491,9 @@ abstract class BaseManager
         }
 
         foreach ($criteria as $key => $value) {
-            $qb->andWhere(sprintf('o.%1$s = :%1$s', $key))
-               ->setParameter($key, $value);
+            $operator = (is_array($value)) ? 'IN' : '=';
+            $qb->andWhere(sprintf('o.%1$s %2$s (:%1$s)', $key, $operator))
+                ->setParameter($key, $value);
         }
 
         $pager = $this->getPagerFromQueryBuilder($qb, $maxPerPage);
@@ -512,8 +513,9 @@ abstract class BaseManager
         $qb = $this->createBaseQueryBuilder($onlyActive);
 
         foreach ($criteria as $key => $value) {
-            $qb->andWhere(sprintf('o.%1$s = :%1$s', $key))
-               ->setParameter($key, $value);
+            $operator = (is_array($value)) ? 'IN' : '=';
+            $qb->andWhere(sprintf('o.%1$s %2$s (:%1$s)', $key, $operator))
+                ->setParameter($key, $value);
         }
 
         if (null !== $sortField) {

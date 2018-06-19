@@ -48,6 +48,17 @@ class BaseManager extends Units\Test
         ;
     }
 
+    public function testCreateNewSubDirectoryObject()
+    {
+        $this
+            ->if($testedClass = $this->createTestedClass('SubDirectory\FakeObject'))
+            ->then
+                ->assert('Test createNew without constructor parameters')
+                    ->object($testedClass->createNew())
+                        ->isInstanceOf('\Skwi\Bundle\ProjectBaseBundle\Tests\FakeBundle\Object\SubDirectory\FakeObject')
+        ;
+    }
+
     public function testGetStateProperty()
     {
         $this
@@ -269,7 +280,7 @@ class BaseManager extends Units\Test
         ;
     }
 
-    private function createTestedClass()
+    private function createTestedClass($object = 'FakeObject')
     {
         $testedClass = new FakeManager();
 
@@ -297,7 +308,7 @@ class BaseManager extends Units\Test
         $testedClass->setOtherFakeObjectRepository($this->mockOtherRepository);
 
         $testedClass->setObjectManager($this->mockObjectManager);
-        $testedClass->setObject('FakeBundle:FakeObject');
+        $testedClass->setObject(sprintf('FakeBundle:%s', $object));
 
         return $testedClass;
     }
